@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     args.input_file = args.input_file.expanduser()
     return args
 
-def print_offline_override(response, output_file: Path = None) -> None:
+def print_offline_json(response, output_file: Path = None) -> None:
     """
     Print the response and optionally save it to a JSON file.
     """
@@ -55,7 +55,7 @@ def print_offline_override(response, output_file: Path = None) -> None:
     }
 
     if output_file:
-        with output_file.open("w") as f:
+        with output_file.open("w", encoding="utf-8") as f:
             json.dump(response_dict, f, indent=4)
 
 def main() -> None:
@@ -89,7 +89,7 @@ def main() -> None:
         data = fh.read()
     try:
         response=asr_service.offline_recognize(data, config)
-        print_offline_override(response, args.output_json)
+        print_offline_json(response, args.output_json)
     except grpc.RpcError as e:
         print(e.details())
 
