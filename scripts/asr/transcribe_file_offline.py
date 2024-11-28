@@ -56,7 +56,7 @@ def print_offline_json(response, output_file: Path = None) -> None:
 
     if output_file:
         with output_file.open("w", encoding="utf-8") as f:
-            json.dump(response_dict, f, indent=4)
+            json.dump(response_dict, f, indent=4, ensure_ascii=False)
 
 def main() -> None:
     args = parse_args()
